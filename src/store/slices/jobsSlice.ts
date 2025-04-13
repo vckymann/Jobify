@@ -7,7 +7,8 @@ const initialState = {
     isSubmitting: false,
     showAdditionalFilters: false,
     isDarkMode: false,
-    formValues: {}
+    formValues: {},
+    isFirstRender: true
 }
 
 const jobsSlice = createSlice({
@@ -34,9 +35,9 @@ const jobsSlice = createSlice({
         },
         setFormValues: (state,action) => {
             state.formValues = action.payload
-        }
+        },        
     }
 })
 
-export const { setJobs, setSelectedJob, setSavedJobs, setIsSubmitting, setShowAdditionalFilters, setIsDarkMode, setFormValues } = jobsSlice.actions;
+export const { setJobs, setSelectedJob, setSavedJobs, setIsSubmitting, setShowAdditionalFilters, setIsDarkMode, setFormValues} = jobsSlice.actions;
 export default jobsSlice.reducer

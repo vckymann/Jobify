@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, } from "react";
 import { Menu,} from "./ui/navbar-menu";
 import { cn } from "@/lib/utils";
 import { IconLocation, IconSearch } from "@tabler/icons-react";
@@ -24,7 +24,6 @@ export function NavbarDemo() {
   const jobs = useSelector((state: RootState) => state.jobs.jobs);
   const isSubmitting = useSelector((state: RootState) => state.jobs.isSubmitting);
   const formValues = useSelector((state: RootState) => state.jobs.formValues);
-  const isFirstRender = useRef(true);
   
   const showAdditionalFilters = useSelector((state: RootState) => state.jobs.showAdditionalFilters);
 
@@ -69,31 +68,34 @@ export function NavbarDemo() {
    fetchJobs(data)
    dispatch(setSelectedJob([]))
   }
+
+  const prevFormVlaues = useRef(formValues)
   
   useEffect(() => {  
 
+    const currentvalues = form.getValues()
   if (Object.values(watchFields).every(value => value === "")) {
       return; // Prevent API call if all fields are empty
   }
     if (!showAdditionalFilters) {
       return
-    }
-    
-    console.log(isFirstRender.current);
-    
-    if (isFirstRender.current) {
-      isFirstRender.current = false;      
-      return      
-    }
+    }    
     
     if (isSubmitting) {
+      return
+    }
+
+    if (JSON.stringify(prevFormVlaues.current) === JSON.stringify(currentvalues)) {
+      console.log(formValues);
+      console.log(form.getValues());
+      prevFormVlaues.current = formValues
       return
     }
     
     dispatch(setIsSubmitting(true))
     debouncedFetch()
 
-  },[...watchFields, showAdditionalFilters])
+  },[...watchFields, showAdditionalFilters,formValues])
   
 
   return (   
