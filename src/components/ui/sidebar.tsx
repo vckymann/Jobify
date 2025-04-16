@@ -180,7 +180,7 @@ export const SidebarLink = ({
   return (
     <Link
      onClick={() => {
-       if (link.href === "/logout") {
+       if (link.label === "Logout") {
         setOpen(false);
         signOut();
         return        

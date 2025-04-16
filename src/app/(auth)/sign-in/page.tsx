@@ -73,7 +73,7 @@ export default function Page() {
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter your email or username" 
+                                        <Input placeholder="Enter your email address" 
                                         {...field}                                   
                                      />
                                     </FormControl>  
