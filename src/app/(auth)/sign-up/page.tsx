@@ -29,7 +29,6 @@ export default function Page() {
 
     const localSignUpSchema = signUpSchema.omit({verifyCode: true, verifyCodeExpiry: true});
 
-    //zod implementation
     const form = useForm<z.infer<typeof localSignUpSchema>>({
         resolver: zodResolver(localSignUpSchema),
         defaultValues: {

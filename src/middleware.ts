@@ -4,7 +4,7 @@ import { getToken } from 'next-auth/jwt';
 
 export async function middleware(req: NextRequest) {
     const token = await getToken({ req });
-    const url = req.nextUrl
+    const url = req.nextUrl    
 
     if (token && (
         url.pathname.startsWith('/sign-in') ||

@@ -37,16 +37,16 @@ export async function GET (req:Request) {
 
         return Response.json({
             success:true,
-            message:"username is available"
+            message:"This email is available"
         }, {status:200})
 
     } catch (error) {
-        console.log("error checking username",error);
+        console.log("error checking email",error);
         
         return Response.json
         ({
             success:false,
-            message:"error checking username"
+            message:"error checking email"
         }, {status:500})
     };
 }
