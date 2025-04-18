@@ -7,8 +7,7 @@ const initialState = {
     isSubmitting: false,
     showAdditionalFilters: false,
     isDarkMode: false,
-    formValues: {},
-    isFirstRender: true
+    resumeExists: false,    
 }
 
 const jobsSlice = createSlice({
@@ -33,11 +32,11 @@ const jobsSlice = createSlice({
         setIsDarkMode: (state, action) => {
             state.isDarkMode = action.payload;
         },
-        setFormValues: (state,action) => {
-            state.formValues = action.payload
+        setResumeExists: (state,action) => {
+            state.resumeExists = action.payload
         },        
     }
 })
 
-export const { setJobs, setSelectedJob, setSavedJobs, setIsSubmitting, setShowAdditionalFilters, setIsDarkMode, setFormValues} = jobsSlice.actions;
+export const { setJobs, setSelectedJob, setSavedJobs, setIsSubmitting, setShowAdditionalFilters, setIsDarkMode, setResumeExists} = jobsSlice.actions;
 export default jobsSlice.reducer

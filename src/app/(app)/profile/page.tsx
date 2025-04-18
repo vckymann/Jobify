@@ -4,16 +4,22 @@ import React, { useEffect } from 'react'
 import { useSession } from 'next-auth/react';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
-
+import { setResumeExists } from '@/store/slices/jobsSlice';
 import { DropdownMenuDemo } from '@/components/dropdown';
 import { ApiResponse } from '@/types/ApiResponse';
 import { toast } from '@/hooks/use-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
 function Page() {
 
+  const res = useSelector((state: RootState) => state.jobs.resumeExists);
+  console.log(res);
+  
   const session = useSession();
   const [resumePath, setResumePath] = useState('');
-  const [resumeExists, setResumeExists] = useState(false);
+  const [resumeExists, setResume] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getResume = async () => {
@@ -21,12 +27,13 @@ function Page() {
         const response = await axios.get('/api/resume');
         if(response.status !== 200) return
         setResumePath(response.data.data);
-        setResumeExists(true);        
-        
+        setResume(true);        
+        dispatch(setResumeExists(true));
       } catch (error) {
         const axiosError = error as AxiosError<ApiResponse>;
         if (axiosError.response?.status === 404) {
-          return
+          dispatch(setResumeExists(false));
+          return          
         }
       }
     }
@@ -48,7 +55,7 @@ function Page() {
       });
 
       if (response.data.success) {
-        setResumeExists(true);
+        setResume(true);
         toast({
           title: "Success",
           description: response?.data?.message,
@@ -87,7 +94,7 @@ function Page() {
           <path d="M0 2C0 0.895431 0.895431 0 2 0H27C28.1046 0 29 0.895431 29 2V13C29 14.1046 29.8954 15 31 15H42C43.1046 15 44 15.8954 44 17V62C44 63.1046 43.1046 64 42 64H2C0.895431 64 0 63.1046 0 62V2Z" fill="#E4E2E0"></path><path d="M6 7C6 6.44772 6.44772 6 7 6H21C21.5523 6 22 6.44772 22 7C22 7.55228 21.5523 8 21 8H7C6.44772 8 6 7.55228 6 7Z" fill="#D4D2D0"></path><path d="M6 11C6 10.4477 6.44772 10 7 10H21C21.5523 10 22 10.4477 22 11C22 11.5523 21.5523 12 21 12H7C6.44772 12 6 11.5523 6 11Z" fill="#D4D2D0"></path><path d="M6 15C6 14.4477 6.44772 14 7 14H21C21.5523 14 22 14.4477 22 15C22 15.5523 21.5523 16 21 16H7C6.44772 16 6 15.5523 6 15Z" fill="#D4D2D0"></path><path d="M6 21C6 20.4477 6.44772 20 7 20H37C37.5523 20 38 20.4477 38 21C38 21.5523 37.5523 22 37 22H7C6.44772 22 6 21.5523 6 21Z" fill="#D4D2D0"></path><path d="M6 25C6 24.4477 6.44772 24 7 24H37C37.5523 24 38 24.4477 38 25C38 25.5523 37.5523 26 37 26H7C6.44772 26 6 25.5523 6 25Z" fill="#D4D2D0"></path><path d="M6 29C6 28.4477 6.44772 28 7 28H37C37.5523 28 38 28.4477 38 29C38 29.5523 37.5523 30 37 30H7C6.44772 30 6 29.5523 6 29Z" fill="#D4D2D0"></path><path d="M6 33C6 32.4477 6.44772 32 7 32H37C37.5523 32 38 32.4477 38 33C38 33.5523 37.5523 34 37 34H7C6.44772 34 6 33.5523 6 33Z" fill="#D4D2D0"></path><path d="M0 44H44V62C44 63.1046 43.1046 64 42 64H2C0.895431 64 0 63.1046 0 62V44Z" fill="#2557a7"></path><text aria-hidden="true" className="css-1pz4pqc e1wnkr790"><tspan className='' x="10" y="58">PDF</tspan></text></svg>
           <p className='mb-2 text-lg font-semibold'> Resume.pdf</p>
         </div>
-        <DropdownMenuDemo setResumeExists={setResumeExists} resumePath={resumePath} />
+        <DropdownMenuDemo setResumeExists={setResume} resumePath={resumePath} />
         </>
       ): (
         <div className='flex flex-col items-center w-full'>

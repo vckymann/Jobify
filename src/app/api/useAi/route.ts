@@ -30,6 +30,8 @@ export async function POST(req: Request) {
             }, {status: 401})
         }
 
+        
+
         return Response.json({
             success: true,
             message: `now ${useAi ? "using" : "not using"} ai`,

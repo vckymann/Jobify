@@ -16,6 +16,7 @@ import { useSession } from "next-auth/react";
 import { SwitchDemo } from "./switch";
 
 
+
 export const Logo = () => {
     return (
       <Link
@@ -46,7 +47,7 @@ export const Logo = () => {
 
   export function SidebarDemo({ children }: { children: React.ReactNode }) {
   const session = useSession();
-  console.log(session);
+  console.log(session)
   
     const links = [
         {
@@ -110,6 +111,7 @@ export const Logo = () => {
                   {links.map((link, idx) => (
                     <SidebarLink key={idx} link={link} />
                   ))}
+                  
                   <SwitchDemo open={open} />
                 </div>
               </div>
