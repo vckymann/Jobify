@@ -128,7 +128,7 @@ export function NavbarDemo() {
     <div className="relative  w-full flex flex-col items-center dark:text-white">
       {showAdditionalFilters && 
           <button onClick={(e) => 
-            {e.preventDefault();//stop triggering hide filters from pressing enter button
+            {e.preventDefault();
             dispatch(setShowAdditionalFilters(false))}} className="text-lg text-black bg-gray-100 p-1 px-14 mb-3 rounded-md border font-semibold border-gray-500 hover:bg-gray-300 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-600" tabIndex={0} title="clear Search">Hide Filters</button>
       }
 
@@ -165,7 +165,7 @@ export function NavbarDemo() {
             <Select onValueChange={field.onChange} value={field.value}>
               <FormControl>
                 <SelectTrigger className="">
-                  <SelectValue placeholder="Job Type">Job Type</SelectValue>
+                  <SelectValue placeholder="Job Type"/>
                 </SelectTrigger>
               </FormControl>
               <SelectContent className="bg-white border-gray-500 dark:bg-neutral-800 dark:text-white">
