@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     
 
     if (!resume) {
-        return NextResponse.json({ error: 'No resume uploaded' }, { status: 400 });
+        return NextResponse.json({ success:false, message: 'No resume uploaded' }, { status: 400 });
     }
 
     const bytes = await resume.arrayBuffer();
@@ -48,10 +48,10 @@ export async function GET() {
 
     const path = join(process.cwd(), 'public', `resume${user}.pdf`);
     try {
-        await stat(path); // Checks if the file exists
+        await stat(path);
       } catch (err) {
         console.log(err);
-        return NextResponse.json({ error: 'No resume found' }, { status: 404 });
+        return NextResponse.json({ success: false, message: 'No resume found' }, { status: 404 });
       }
         
     const publicPath = `/resume${user}.pdf`;

@@ -7,7 +7,7 @@ export async function DELETE() {
 
     if (!session) {
         return Response.json(
-            { error: 'User is not logged in' },
+            { success: false, message: 'User is not logged in' },
             { status: 401 } // 401 is more appropriate for auth
         );
     }

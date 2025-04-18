@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     const user = await UserModel.findOne({ email });
 
     if (!user) {
-        return Response.json({ error: 'User not found' }, { status: 404 });
+        return Response.json({ success: false, message: 'User not found' }, { status: 404 });
     }
 
     if (user.password !== oldPassword) {

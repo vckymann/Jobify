@@ -10,7 +10,8 @@ export async function GET() {
     const session = await getServerSession(authOptions);
     if (!session) {
         return Response.json({
-            error:'user is not logged in'
+            success:false,
+            message:'user is not logged in'
         },{status:404})
     }
 
@@ -23,14 +24,14 @@ export async function GET() {
         const user = await UserModel.findOne({email});
 
         if (!user) {
-            return Response.json({ error: 'User not found' }, { status: 404 });
+            return Response.json({ success : false, message: 'User not found' }, { status: 404 });
         }
 
         return Response.json({ success: true, message: 'Saved jobs fetched successfully', data: user.savedJobs }, { status: 200 });
     } catch (error) {
         
         console.log("error in fetching saved jobs",error);
-        return Response.json({ error: 'Error fetching saved jobs' }, { status: 500 });
+        return Response.json({ success: false, message: 'Error fetching saved jobs' }, { status: 500 });
     }
 }
 
@@ -46,7 +47,8 @@ export async function DELETE(req: Request) {
 
     if (!session) {
         return Response.json({
-            error:'user is not logged in'
+            success:false,
+            message:'user is not logged in'
         },{status:404})        
     }
 
@@ -54,7 +56,7 @@ export async function DELETE(req: Request) {
         const user = await UserModel.findOne({email});
 
         if (!user) {
-            return Response.json({ error: 'User not found' }, { status: 404 });
+            return Response.json({ success: false, message: 'User not found' }, { status: 404 });
         }
 
         user.savedJobs = user.savedJobs.filter((savedJob:NormalizedJob) => savedJob.jobId !== job.jobId);
@@ -66,7 +68,7 @@ export async function DELETE(req: Request) {
         
     } catch (error) {
         console.log("error in deleting job",error);
-        return Response.json({ error: 'Error deleting job' }, { status: 500 });
+        return Response.json({ success: false, message: 'Error deleting job' }, { status: 500 });
     }
 }
 
@@ -99,6 +101,6 @@ export async function POST(req: Request) {
 
    } catch (error) {
     console.log("error in saving job",error);
-    return Response.json({ error: 'Error saving job' }, { status: 500 });
+    return Response.json({ success: false, message: 'Error saving job' }, { status: 500 });
    }
 }

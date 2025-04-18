@@ -58,14 +58,14 @@ export default function Page() {
 
     return (
 
-        <div className="flex justify-center items-center min-h-screen bg-gray-200">
+        <div className="flex justify-center items-center min-h-screen bg-gray-300">
             <div className="w-full max-w-md p-8 text-black bg-white rounded-lg shadow-md">
                 <div className="text-center">
-                    <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">Join Us</h1>
+                    <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">Jobify</h1>
                     <p className="mb-4">Sign in to access your account</p>
                 </div>
                 <Form {...form}>
-                    <form className="space-y-4" onSubmit={form.handleSubmit(submitForm)}>                        
+                    <form className="space-y-4 border-blue-500" onSubmit={form.handleSubmit(submitForm)}>                        
                         <FormField
                             name="email"
                             control={form.control}
@@ -93,7 +93,7 @@ export default function Page() {
                                     <FormMessage className="text-red-500" />
                                 </FormItem>
                             )}/>
-                        <Button disabled={isSubmitting} type="submit" className="w-full" >
+                        <Button disabled={isSubmitting} type="submit" className="w-full bg-blue-500" >
                             {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 
                             : "Sign In"}
                         </Button>
