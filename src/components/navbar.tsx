@@ -96,7 +96,7 @@ export function NavbarDemo() {
     
 
   if (Object.values(watchFields).every(value => value === "")) {
-      return; // Prevent API call if all fields are empty
+      return;
   }
     if (!showAdditionalFilters) {
       return

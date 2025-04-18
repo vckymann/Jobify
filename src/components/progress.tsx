@@ -5,24 +5,23 @@ import CircularProgress from "@mui/joy/CircularProgress";
 import { useCountUp } from "use-count-up";
 
 interface CircularProgressProps {
-  matchScore: number; // Match score from backend
+  matchScore: number;
   detailSection?: boolean
 }
 
 export default function CircularProgressCountUp({ matchScore,detailSection }: CircularProgressProps) {
-  // Animate the circular progress from 0 to matchScore
+  
   const { value } = useCountUp({
     isCounting: true,
-    duration: 2, // Animation duration (1 sec)
+    duration: 2,
     start: 0,
     end: matchScore,
   });
-
-  // Determine the progress bar color
+  
   const getColor = (score: number) => {
-    if (score >= 80) return "rgb(59, 130, 246)"; // Fully matched
-    if (score >= 50) return "orange"; // Medium match
-    return "red"; // Low match
+    if (score >= 80) return "rgb(59, 130, 246)"; 
+    if (score >= 50) return "orange";
+    return "red";
   };
 
   return (

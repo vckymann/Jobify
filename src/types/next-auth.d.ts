@@ -28,12 +28,3 @@ declare module 'next-auth/jwt' {
         name?: string
     }
 }
-
-// declare module 'next-auth/token' {
-//     interface Token {
-//         _id?: string,
-//         isVerified?: boolean
-//         isAcceptingMessages?: boolean
-//         username?: string
-//     }
-// }
