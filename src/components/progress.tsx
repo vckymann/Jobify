@@ -20,7 +20,7 @@ export default function CircularProgressCountUp({ matchScore,detailSection }: Ci
 
   // Determine the progress bar color
   const getColor = (score: number) => {
-    if (score >= 80) return "skyblue"; // Fully matched
+    if (score >= 80) return "rgb(59, 130, 246)"; // Fully matched
     if (score >= 50) return "orange"; // Medium match
     return "red"; // Low match
   };

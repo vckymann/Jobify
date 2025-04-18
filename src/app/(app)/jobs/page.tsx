@@ -99,6 +99,7 @@ function Page() {
                 <a target="_blank" href={selectedJob[0].jobUrl}>                  
                 <button className="bg-blue-500 hover:opacity-90 text-white font-bold py-2 px-4 rounded-lg border border-gray-400">Apply Now</button>
                 </a>
+
                 <button disabled={selectedJob[0].saved || jobSaved} onClick={async () => {
                   try {
                     const response = await axios.post(`/api/savedJobs`, { job: selectedJob[0] });
@@ -118,14 +119,22 @@ function Page() {
                       description: axiosError.response?.data.message,
                     });                    
                   }
-                }} className="bg-gray-200 hover:bg-gray-300 border border-gray-400 text-white font-bold py-2 px-4 rounded-lg dark:bg-neutral-800 dark:hover:bg-neutral-600">{selectedJob[0].saved || jobSaved ? <IconCheck className="text-black dark:text-white" /> : <IconBadge className="rotate-180 text-black dark:text-white" />}</button>
+                }} className="bg-gray-200 hover:bg-gray-300 border border-gray-400 text-white font-bold py-2 px-4 rounded-lg dark:bg-neutral-800 dark:hover:bg-neutral-600 relative group">{selectedJob[0].saved || jobSaved ? <IconCheck className="text-black dark:text-white" /> : <IconBadge className="rotate-180 text-black dark:text-white" />}
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 text-nowrap group-hover:opacity-100 transition">
+                    Save job
+                  </span>
+                </button>
                 <button onClick={() => {
                   navigator.clipboard.writeText(window.location.href)
                   toast({
                     title: "Copied to clipboard",
                     description: "Link copied to clipboard",
                   })
-                }} className="bg-gray-200 hover:bg-gray-300 border border-gray-400 text-white dark:bg-neutral-800 dark:hover:bg-neutral-600 font-bold py-2 px-4 rounded-lg"><IconCopy className="text-black dark:text-white" /></button></div>
+                }} className="bg-gray-200 hover:bg-gray-300 border border-gray-400 text-white dark:bg-neutral-800 dark:hover:bg-neutral-600 font-bold py-2 px-4 rounded-lg relative group"><IconCopy className="text-black dark:text-white" />
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 text-nowrap group-hover:opacity-100 transition">
+                    Copy link
+                  </span>
+                </button></div>
               </div>
             )}
             {

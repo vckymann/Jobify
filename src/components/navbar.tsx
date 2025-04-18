@@ -165,7 +165,7 @@ export function NavbarDemo() {
             <Select onValueChange={field.onChange} value={field.value}>
               <FormControl>
                 <SelectTrigger className="">
-                  <SelectValue placeholder="Job Type" />
+                  <SelectValue placeholder="Job Type">Job Type</SelectValue>
                 </SelectTrigger>
               </FormControl>
               <SelectContent className="bg-white border-gray-500 dark:bg-neutral-800 dark:text-white">
