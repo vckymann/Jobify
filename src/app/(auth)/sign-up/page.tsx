@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useDebounceCallback } from "usehooks-ts";
+import { useMediaQuery } from "@mui/material";
 
 
 export default function Page() {
@@ -22,6 +23,8 @@ export default function Page() {
     const [emailMessage, setEmailMessage] = useState("")
     const [isCheckingEmail, setIsCheckingEmail] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const desktop = useMediaQuery("(min-width: 1024px)");
     
     const { toast } = useToast();
     const router = useRouter();
@@ -97,9 +100,9 @@ export default function Page() {
     }
 
     return (
-
-        <div className="flex justify-center items-center min-h-screen bg-gray-200">
-            <div className="w-full max-w-md p-8 bg-white text-black rounded-lg shadow-md">
+        <div className="w-full h-full bg-black">        
+        <div className="flex justify-center mx-auto max-w-[1440px] lg:justify-normal items-center min-h-screen bg-black">
+            <div className="w-full max-w-md p-8 bg-black text-white rounded-lg shadow-md">
                 <div className="text-center">
                     <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">Jobify</h1>
                     <p className="mb-4">Sign up to access your account</p>
@@ -113,7 +116,7 @@ export default function Page() {
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter your email" {...field}
+                                        <Input className="bg-black text-white" placeholder="Enter your email" {...field}
                                         onChange={(e) => {
                                             field.onChange(e);  
                                             debounced(e.target.value)                                       
@@ -133,7 +136,7 @@ export default function Page() {
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter your name" 
+                                        <Input className="bg-black text-white" placeholder="Enter your name" 
                                         {...field}                                   
                                      />
                                     </FormControl>  
@@ -147,7 +150,7 @@ export default function Page() {
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
-                                        <Input type="password" placeholder="Enter your password" {...field}  
+                                        <Input className="bg-black text-white" type="password" placeholder="Enter your password" {...field}  
                                      />
                                     </FormControl>  
                                     <FormMessage className="text-red-500" />
@@ -163,7 +166,14 @@ export default function Page() {
                     <p>Already have an account? <Link href="/sign-in" className="text-blue-500 hover:underline">Sign In</Link></p>
                 </div>
             </div>
+            {desktop &&
+            <div className="h-screen bg-black w-full flex flex-col items-center justify-center border-l border-blue-500">
+            <video src="/video.mp4" autoPlay loop muted className="w-[35rem] object-cover"></video>
+            <p className="text-xl text-center font-semibold text-white pl-6">Use the Power of AI to Find Your Dream Job</p>
+            </div>
+            }
         </div>
+    </div>
     )
 
 }

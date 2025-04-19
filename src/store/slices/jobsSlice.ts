@@ -6,7 +6,7 @@ const initialState = {
     savedJobs: [],
     isSubmitting: false,
     showAdditionalFilters: false,
-    isDarkMode: false,
+    isDarkMode: true,
     resumeExists: false,    
 }
 

@@ -23,8 +23,7 @@ export const Logo = () => {
         href="#"
         className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
       >
-        <Image width={40} height={40} src="/logo.png" className="" alt="" >
-        </Image>
+        <Image width={40} height={40} src="/logo.png" className="" alt="" ></Image>
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
