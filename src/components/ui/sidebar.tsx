@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { signOut } from "next-auth/react";
 import { Loader } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 interface Links {
   label: string;
@@ -183,6 +184,10 @@ export const SidebarLink = ({
        if (link.label === "Logout") {
         setOpen(false);
         signOut();
+        toast({
+          title: "Logout",
+          description: "Logging out of the account",          
+        })
         return        
       }
       prefetchHandler()
