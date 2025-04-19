@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
         url.pathname.startsWith('/sign-up') ||
         url.pathname.startsWith('/verify')
     )) {
-        return NextResponse.redirect(new URL('/', req.url));
+        return NextResponse.redirect(new URL('/jobs', req.url));
     }
 
     if (!token && (
