@@ -9,8 +9,7 @@ export async function middleware(req: NextRequest) {
     if (token && (
         url.pathname.startsWith('/sign-in') ||
         url.pathname.startsWith('/sign-up') ||
-        url.pathname.startsWith('/verify') || 
-        url.pathname.startsWith('/')
+        url.pathname.startsWith('/verify')       
     )) {
         return NextResponse.redirect(new URL('/jobs', req.url));
     }
@@ -19,8 +18,7 @@ export async function middleware(req: NextRequest) {
         url.pathname.startsWith('/jobs') ||
         url.pathname.startsWith('/resume') ||
         url.pathname.startsWith('/saved-jobs') ||
-        url.pathname.startsWith('/profile') ||
-        url.pathname.startsWith('/')
+        url.pathname.startsWith('/profile')        
     )) {
         return NextResponse.redirect(new URL('/sign-in', req.url));
     }
