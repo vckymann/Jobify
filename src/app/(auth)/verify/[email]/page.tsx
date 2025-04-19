@@ -19,6 +19,7 @@ function Page() {
 
     const [verifyCode, setVerifyCode] = useState("")
     const [message,setMessage] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
 
     const form = useForm<z.infer<typeof verifySchema>>({
         resolver: zodResolver(verifySchema), 
@@ -55,6 +56,7 @@ function Page() {
     },[])
 
     const onSubmit = async (data: z.infer<typeof verifySchema>) => {
+        setIsLoading(true)
         try {
             const response = await axios.post<ApiResponse>(`/api/verifyCode`, {
                 email: param.email,
@@ -78,6 +80,8 @@ function Page() {
                 description: errorMessage,
                 variant: 'destructive'
             })
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -85,7 +89,7 @@ function Page() {
     <div className='flex items-center justify-center min-h-screen bg-gray-100'>
         <div className='w-full max-w-md p-6 bg-white rounded-lg shadow-md'>
             <h2 className='text-2xl font-semibold text-center text-gray-900 mb-6'>Verify your email</h2>
-            <h3>{message} = {verifyCode}</h3>
+            <h3 className='pb-4 text-lg font-semibold text-center text-gray-900 '>{message} = {verifyCode}</h3>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField
@@ -101,7 +105,7 @@ function Page() {
                             </FormItem>
                         )}
                     /> 
-                    <Button className='mt-4' type="submit">Verify</Button>                                     
+                    <Button className='mt-4 bg-blue-500' type="submit">{isLoading ? 'Verifying...' : 'Verify'}</Button>                                     
                 </form>
             </Form>
         </div>

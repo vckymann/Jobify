@@ -179,7 +179,10 @@ function Page() {
       </div>
       ) : (
       <>
-      <div className="w-full h-full flex justify-center items-center"><Loader className="animate-spin" /></div>
+      <div className="w-full h-[50vh] flex justify-center items-center">{jobs.length >= 0 && isSubmitting  ? <Loader className="animate-spin" /> : <div>
+        <h2 className="text-5xl font-bold text-blue-500 text-center">Jobify</h2>
+        <p className="font-semibold text-center pt-2">Find your dream job today</p>
+      </div>}</div>
       </>
       )}      
     </div>        

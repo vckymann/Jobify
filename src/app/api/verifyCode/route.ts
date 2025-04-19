@@ -23,7 +23,7 @@ export async function GET(req:Request) {
 
     return Response.json({
         success:true,
-        message:"because I'm using unpaid services, verification code is not sent to every email. So i am providing the verification code by myself.",
+        message:"because I'm using unpaid services, verification code is not sent to every email. So i am providing the verification code by myself",
         data:user.verifyCode
     }, {status:200})
 }

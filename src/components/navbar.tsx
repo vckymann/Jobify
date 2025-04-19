@@ -33,7 +33,7 @@ export function NavbarDemo() {
     remote: "",
     datePosted: "",
     radius: "",
-    page: 1
+    page: "1"
   }
   
   const storedValues  = localStorage.getItem("formValues");
@@ -124,12 +124,19 @@ export function NavbarDemo() {
       
     
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.log(errors))}>
     <div className="relative  w-full flex flex-col items-center dark:text-white">
       {showAdditionalFilters && 
           <button onClick={(e) => 
-            {e.preventDefault();
-            dispatch(setShowAdditionalFilters(false))}} className="text-lg text-black bg-gray-100 p-1 px-14 mb-3 rounded-md border font-semibold border-gray-500 hover:bg-gray-300 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-600" tabIndex={0} title="clear Search">Hide Filters</button>
+          {
+            e.preventDefault(); 
+            form.resetField("datePosted");
+            form.resetField("jobType");
+            form.resetField("remote");
+            form.resetField("radius");            
+            localStorage.removeItem("formValues");           
+            dispatch(setShowAdditionalFilters(false))
+          }} className="text-lg text-black bg-gray-100 p-1 px-14 mb-3 rounded-md border font-semibold border-gray-500 hover:bg-gray-300 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-600" tabIndex={0} title="clear Search">Clear Filters</button>
       }
 
       <div className={cn("relative max-w-5xl mx-auto z-50")}>
@@ -148,7 +155,7 @@ export function NavbarDemo() {
             <IconLocation className="mt-1" />
             <FormField name="location" control={form.control} render={({ field }) => (<FormItem>
               <FormControl>
-                <input {...field} className="flex-1 py-2 rounded-sm outline-none dark:bg-neutral-800" type="text" placeholder="city, province or 'remote'"/>
+                <input {...field} className="flex-1 py-2 rounded-sm outline-none dark:bg-neutral-800" type="text" placeholder="city or province"/>
               </FormControl> 
             </FormItem>)} /> 
           </div>
@@ -165,7 +172,7 @@ export function NavbarDemo() {
             <Select onValueChange={field.onChange} value={field.value}>
               <FormControl>
                 <SelectTrigger className="">
-                  <SelectValue placeholder="Job Type"/>
+                  <SelectValue placeholder='Job Type'/>
                 </SelectTrigger>
               </FormControl>
               <SelectContent className="bg-white border-gray-500 dark:bg-neutral-800 dark:text-white">
