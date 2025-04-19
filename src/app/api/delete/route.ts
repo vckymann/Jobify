@@ -30,6 +30,7 @@ export async function DELETE() {
             { success: true, message: "Your account has been deleted successfully" },
             { status: 200 }
         );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
         return Response.json(
             { success: false, message: "Failed to delete your account" },
