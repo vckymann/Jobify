@@ -3,7 +3,7 @@ import UserModel from "@/model/User";
 import { emailValidation} from "@/schemas/signUpSchema";
 import { z } from "zod";
 
-export const emailSchema = z.object({
+const emailSchema = z.object({
     email:emailValidation
 })
 
