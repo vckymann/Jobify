@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 
 export const metadata: Metadata = {
-  title: "Job Finder",
+  title: "Jobify",
   description: "Find your dream job",
   icons: "/logo.png",
 };
