@@ -44,7 +44,7 @@ export function NavbarDemo() {
             <IconSearch className="mt-1" />
             <FormField name="keyword" control={form.control} render={({ field }) => (<FormItem>
               <FormControl>
-                <input {...field} className="flex-1 py-2 rounded-sm outline-none dark:bg-neutral-800 w-[30rem]" type="text" placeholder="Job title or keywords"/>
+                <input {...field} className="flex-1 py-2 rounded-sm outline-none dark:bg-neutral-800 max-w-[30rem] min-w-[22rem]" type="text" placeholder="Job title or keywords"/>
               </FormControl>
             </FormItem>)} /> 
           </div>
@@ -53,7 +53,7 @@ export function NavbarDemo() {
             <IconLocation className="mt-1" />
             <FormField name="location" control={form.control} render={({ field }) => (<FormItem>
               <FormControl>
-                <input {...field} className="flex-1 py-2 rounded-sm outline-none dark:bg-neutral-800 w-[30rem]" type="text" placeholder="city or province"/>
+                <input {...field} className="flex-1 py-2 rounded-sm outline-none dark:bg-neutral-800 max-w-[30rem] min-w-[22rem]" type="text" placeholder="city or province"/>
               </FormControl> 
             </FormItem>)} /> 
           </div>
