@@ -26,10 +26,7 @@ function Page() {
   const isSubmitting = useSelector((state: RootState ) => state.jobs.isSubmitting);
   const selectedJob: NormalizedJob[] = useSelector((state: RootState ) => state.jobs.selectedJob);
 
-  const [jobSaved, setJobSaved] = useState(false);
-
-  console.log("submitting",isSubmitting);
-  
+  const [jobSaved, setJobSaved] = useState(false);  
   
 
   return (

@@ -66,7 +66,7 @@ export const Menu = ({
 }) => {
   return (
     <nav
-      className="relative rounded-lg border shadow-md shadow-blue-400 border-blue-500 dark:bg-neutral-800 dark:border-white/[0.2] bg-white shadow-input flex justify-center space-x-4 px-2 py-3 "
+      className="relative w-full md:w-fit rounded-lg border shadow-md shadow-blue-400 border-blue-500 dark:bg-neutral-800 dark:border-white/[0.2] bg-white shadow-input flex justify-center space-x-4 px-2 py-3 "
     >
       {children}
     </nav>

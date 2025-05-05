@@ -26,7 +26,7 @@ export async function POST(req: Request) {
         if (!updatedUser) {
             return Response.json({
                 success: false,
-                message: "user not found"
+                message: "user not found please login again"
             }, {status: 401})
         }
 

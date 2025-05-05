@@ -97,7 +97,7 @@ export const Logo = () => {
       return (
         <div
           className={cn(
-            "w-full flex flex-col md:flex-row bg-[#fcf9f3f1]+3 dark:bg-neutral-800 flex-1 mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
+            "w-full mx-auto flex flex-col md:flex-row bg-[#fcf9f3f1]+3 dark:bg-neutral-800 flex-1 border border-neutral-200 dark:border-neutral-700 overflow-hidden",
             "h-screen"
           )}
         >

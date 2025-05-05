@@ -5,6 +5,7 @@ import { RootState } from "@/store/store";
 import { ApiResponse } from "@/types/ApiResponse";
 import { IconAi } from "@tabler/icons-react"
 import axios, { AxiosError } from "axios";
+import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -23,6 +24,9 @@ export function SwitchDemo({open}:{open:boolean}) {
                 }
             } catch (error) {
                 const axiosError = error as AxiosError<ApiResponse>;
+                if (axiosError.response?.data.message === "user not found") {
+                    signOut()
+                }
                 toast({
                     title: "Failed to use AI",
                     description: axiosError.response?.data.message,
