@@ -21,10 +21,7 @@ export const authOptions: NextAuthOptions = {
                     
                    const user = await UserModel.findOne({
                         email: credentials.identifier,
-                    })
-
-                    console.log(user);
-                    
+                    })                    
 
                     if (!user) {
                     throw new Error("Invalid Email");

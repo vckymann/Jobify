@@ -82,9 +82,7 @@ export const useJobSearch = () => {
   
   useEffect(() => {  
 
-    const currentvalues = form.getValues()
-    console.log(currentvalues, prevFormValues.current);
-    
+    const currentvalues = form.getValues()    
 
   if (Object.values(watchFields).every(value => value === "")) {
       return;

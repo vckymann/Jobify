@@ -8,13 +8,9 @@ import { setResumeExists } from '@/store/slices/jobsSlice';
 import { DropdownMenuDemo } from '@/components/dropdown';
 import { ApiResponse } from '@/types/ApiResponse';
 import { toast } from '@/hooks/use-toast';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
+import { useDispatch } from 'react-redux';
 
-function Page() {
-
-  const res = useSelector((state: RootState) => state.jobs.resumeExists);
-  console.log(res);
+function Page() {  
   
   const session = useSession();
   const [resumePath, setResumePath] = useState('');
@@ -39,10 +35,9 @@ function Page() {
     }
 
     getResume();
-  }, [resumeExists])
+  }, [dispatch])
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("File selected:", e.target.files);
     if (!e.target.files) return;
 
     const file = e.target.files[0];
@@ -69,8 +64,6 @@ function Page() {
       });
     }
   };
-
-  console.log(resumePath);
   
 
   return (

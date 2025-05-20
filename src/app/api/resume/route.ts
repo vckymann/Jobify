@@ -7,10 +7,8 @@ import { authOptions } from '../auth/[...nextauth]/options';
 
 export async function POST(req: NextRequest) {
     const data = await req.formData();
-    console.log(data);
     
     const resume: File | null = data.get('file') as unknown as File
-    console.log(resume);
 
     const session = await getServerSession(authOptions);
     const user = session?.user.email
@@ -25,7 +23,6 @@ export async function POST(req: NextRequest) {
 
     const path = join(process.cwd(), 'public', `resume${user}.pdf`);
     await writeFile(path, buffer);
-    console.log(`open ${path}`);
 
     return NextResponse.json({ success: true, message: 'Resume uploaded successfully' });
     

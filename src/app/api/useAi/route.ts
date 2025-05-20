@@ -16,12 +16,9 @@ export async function POST(req: Request) {
      }
 
      const { useAi } = await req.json();
-     console.log("useAi",useAi);
      
      try {
-        const updatedUser = await UserModel.findByIdAndUpdate(userId, { useAi: useAi }, { new: true });
-        console.log("updatedUser",updatedUser);
-        
+        const updatedUser = await UserModel.findByIdAndUpdate(userId, { useAi: useAi }, { new: true });        
 
         if (!updatedUser) {
             return Response.json({

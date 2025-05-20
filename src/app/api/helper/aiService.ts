@@ -64,8 +64,6 @@ export async function processJobsWithAI(jobs: NormalizedJob[], user: string) {
     }
 
     cleanedText = cleanedText.trim();
-
-    console.log("cleanedText", cleanedText);
     
     const data = JSON.parse(cleanedText);
     

@@ -68,7 +68,6 @@ export default function Page() {
         setIsSubmitting(true)
         try {
            const response = await axios.post<ApiResponse>('/api/sign-up', data)
-           console.log(response);
            if (response.status === 200) {
 
                toast({

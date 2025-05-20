@@ -42,7 +42,6 @@ function Page() {
             
         } catch (error) {
             const axiosError = error as AxiosError<ApiResponse>;
-            console.log(axiosError);
             
             toast({
                 title: "Failed to change password",
@@ -52,10 +51,7 @@ function Page() {
         } finally {
             setLoading(false)
         }
-    }
-
-    console.log(form.formState.errors); 
-    
+    }    
 
   return (
     <div>

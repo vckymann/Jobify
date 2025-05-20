@@ -17,8 +17,6 @@ export async function GET() {
 
     const email = session?.user.email
 
-    console.log(email);        
-
     try {
 
         const user = await UserModel.findOne({email});
@@ -39,7 +37,6 @@ export async function DELETE(req: Request) {
 
     await dbConnect();
     const job = await req.json();
-    console.log("job",job);
     
 
     const session = await getServerSession(authOptions);
@@ -60,7 +57,6 @@ export async function DELETE(req: Request) {
         }
 
         user.savedJobs = user.savedJobs.filter((savedJob:NormalizedJob) => savedJob.jobId !== job.jobId);
-        console.log(user.savedJobs);
         
         await user.save();
 
@@ -79,8 +75,6 @@ export async function POST(req: Request) {
 
    const session = await getServerSession(authOptions);
    const email = session?.user.email
-
-   console.log("email",email, "job",job);      
 
    try {
 

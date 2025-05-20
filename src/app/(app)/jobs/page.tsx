@@ -109,7 +109,6 @@ function Page() {
                     }
                   } catch (error) {
                     const axiosError = error as AxiosError<ApiResponse>;
-                    console.log(axiosError.response?.data.message);
                     
                     toast({
                       title: "Failed to save job",

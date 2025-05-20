@@ -57,9 +57,7 @@ export async function POST(req: Request): Promise<Response> {
 
         }
 
-        const emailResponse = await sendEmail(email, name, verifyCode);
-        console.log(emailResponse);
-        
+        const emailResponse = await sendEmail(email, name, verifyCode);        
 
         if (!emailResponse.success) {
             return Response.json({

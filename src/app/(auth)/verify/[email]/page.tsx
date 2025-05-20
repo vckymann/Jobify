@@ -32,15 +32,12 @@ function Page() {
         const getVerifyCode = async () => {
             try {
                 const response = await axios.get(`/api/verifyCode?email=${param.email}`)
-                if (response.status === 200) {
-                    console.log(response.data);
-                    
+                if (response.status === 200) {                    
                     setVerifyCode(response.data.data)
                     setMessage(response.data.message)
                 }
 
             } catch (error) {
-                console.log(error);
                 const axiosError = error as AxiosError<ApiResponse>
              
                 const errorMessage = axiosError.response?.data.message;
@@ -53,7 +50,7 @@ function Page() {
         }
 
         getVerifyCode();
-    },[])
+    })
 
     const onSubmit = async (data: z.infer<typeof verifySchema>) => {
         setIsLoading(true)
@@ -63,17 +60,13 @@ function Page() {
                 verifyCode: data.verifyCode
             })
 
-            console.log(response);
-
             toast({
                 title: 'success',
                 description: response.data.message
             })
             router.replace(`/sign-in`)
         } catch (error) {
-            const axiosError = error as AxiosError<ApiResponse>;
-            console.log(axiosError);
-            
+            const axiosError = error as AxiosError<ApiResponse>;            
             const errorMessage = axiosError.response?.data.message;
             toast({
                 title: 'Verification failed',

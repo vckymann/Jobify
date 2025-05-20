@@ -47,7 +47,6 @@ export const Logo = () => {
 
   export function SidebarDemo({ children }: { children: React.ReactNode }) {
   const session = useSession();
-  console.log(session)
   
     const links = [
         {

@@ -34,7 +34,6 @@ export function DropdownMenuDemo({
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("File selected:", e.target.files);
     if (!e.target.files) return;
 
     const file = e.target.files[0];

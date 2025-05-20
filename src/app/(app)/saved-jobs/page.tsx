@@ -14,7 +14,6 @@ function Page() {
     const savedJobs:NormalizedJob[] = useSelector((state:RootState) => state.jobs.savedJobs) 
     const [deletedJob, setDeletedJob] = React.useState({});
     const dispatch = useDispatch();
-    console.log(savedJobs);
     
 
     useEffect(() => {

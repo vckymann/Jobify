@@ -22,7 +22,7 @@ export function NavbarDemo() {
       
     
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit, (errors) => console.log(errors))}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
     <div className="relative  w-full flex flex-col items-center dark:text-white">
       {showAdditionalFilters && 
           <button onClick={(e) => 
