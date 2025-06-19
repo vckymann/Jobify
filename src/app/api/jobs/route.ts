@@ -26,7 +26,7 @@ export async function GET(request: Request): Promise<Response> {
     const url = new URL(request.url);
     const params = Object.fromEntries(url.searchParams.entries());
 
-    if(params) {                                
+    if(params) {                                        
 
         adzunaJobsUrl = buildUrl(adzunaJobsUrl, params, "adzuna");
         usaJobsUrl = buildUrl(usaJobsUrl, params, "usaJobs");        
@@ -61,33 +61,18 @@ export async function GET(request: Request): Promise<Response> {
 
         const normalizedJobs = [...normalizeAdzunaResponse, 
             ...normalizeUsaJobsResponse    
-        ];
-        
-        console.log(normalizedJobs.length);
-
-        const jobsWithSavedStatus = normalizedJobs.map((job) => {
-            const existingJob = user.savedJobs && user.savedJobs.find((savedJob) => savedJob.jobId === job.jobId);
-            if (existingJob) {
-                return {
-                    ...job,
-                    saved: true
-                }
-            }
-            return job
-        })
-        
-        
+        ];                    
         
 
-        if (jobsWithSavedStatus.length > 0) {
+        if (normalizedJobs.length > 0) {
             if(useAi) {
-                 const processedJobs = await processJobsWithAI(jobsWithSavedStatus, user.email);                 
+                 const processedJobs = await processJobsWithAI(normalizedJobs, user.email);                 
 
                  if(!processedJobs.success) {
                      return Response.json({
                          success: false,
                          message: processedJobs.message,
-                         data: jobsWithSavedStatus
+                         data: ["ggga"]
                      })
                  }
 
@@ -96,7 +81,7 @@ export async function GET(request: Request): Promise<Response> {
             return Response.json({
                 success: true,
                 message: "Success",
-                data: jobsWithSavedStatus
+                data: normalizedJobs
             })
         }
 

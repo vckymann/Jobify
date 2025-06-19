@@ -1,14 +1,17 @@
+import { NormalizedJob } from "@/types/job";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     jobs: [],
     selectedJob: [],
-    savedJobs: [],
+    savedJobs: [] as NormalizedJob[],
     isSubmitting: false,
     showAdditionalFilters: false,
     isDarkMode: true,
     resumeExists: false,    
 }
+
+
 
 const jobsSlice = createSlice({
     name: 'jobs',
@@ -22,6 +25,10 @@ const jobsSlice = createSlice({
         },
         setSavedJobs: (state, action) => {
             state.savedJobs = action.payload;
+        },
+        addSavedJob: (state, action) => {
+             const exists = state.savedJobs.find((job : NormalizedJob) => job.jobId === action.payload.id);
+             if(!exists) {state.savedJobs.push(action.payload) }
         },
         setIsSubmitting: (state, action) => {
             state.isSubmitting = action.payload;
@@ -38,5 +45,5 @@ const jobsSlice = createSlice({
     }
 })
 
-export const { setJobs, setSelectedJob, setSavedJobs, setIsSubmitting, setShowAdditionalFilters, setIsDarkMode, setResumeExists} = jobsSlice.actions;
+export const { setJobs, setSelectedJob, setSavedJobs, setIsSubmitting, setShowAdditionalFilters, setIsDarkMode, setResumeExists, addSavedJob} = jobsSlice.actions;
 export default jobsSlice.reducer

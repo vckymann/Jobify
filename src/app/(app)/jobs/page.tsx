@@ -6,14 +6,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { NormalizedJob } from "@/types/job";
 import { useDispatch } from "react-redux";
-import { setSelectedJob } from "@/store/slices/jobsSlice";
+import { addSavedJob, setSelectedJob } from "@/store/slices/jobsSlice";
 import { IconBadge, IconBriefcase, IconCash, IconCheck, IconClock, IconCopy, IconSourceCode } from "@tabler/icons-react";
 import { Loader } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/hooks/use-toast";
 import { ApiResponse } from "@/types/ApiResponse";
 import CircularProgressCountUp from "@/components/progress";
-import { useState } from "react";
 
 
 function Page() {
@@ -26,7 +25,9 @@ function Page() {
   const isSubmitting = useSelector((state: RootState ) => state.jobs.isSubmitting);
   const selectedJob: NormalizedJob[] = useSelector((state: RootState ) => state.jobs.selectedJob);
 
-  const [jobSaved, setJobSaved] = useState(false);  
+
+  const savedJobs : NormalizedJob[] = useSelector((state: RootState ) => state.jobs.savedJobs);
+  const savedJobsIds = savedJobs.map((job) => job.jobId);  
   
 
   return (
@@ -97,15 +98,15 @@ function Page() {
                 <button className="bg-blue-500 hover:opacity-90 text-white font-bold py-2 px-4 rounded-lg border border-gray-400">Apply Now</button>
                 </a>
 
-                <button disabled={selectedJob[0].saved || jobSaved} onClick={async () => {
+                <button disabled={selectedJob[0].saved || savedJobsIds.includes(selectedJob[0].jobId)} onClick={async () => {
                   try {
                     const response = await axios.post(`/api/savedJobs`, { job: selectedJob[0] });
                     if (response.status === 200) {
                       toast({
                         title: "Job saved",
                         description: "Job saved to your saved jobs",                       
-                      })
-                      setJobSaved(true);
+                      });
+                      dispatch(addSavedJob(selectedJob[0]));                       
                     }
                   } catch (error) {
                     const axiosError = error as AxiosError<ApiResponse>;
@@ -115,7 +116,7 @@ function Page() {
                       description: axiosError.response?.data.message,
                     });                    
                   }
-                }} className="bg-gray-200 hover:bg-gray-300 border border-gray-400 text-white font-bold py-2 px-4 rounded-lg dark:bg-neutral-800 dark:hover:bg-neutral-600 relative group">{selectedJob[0].saved || jobSaved ? <IconCheck className="text-black dark:text-white" /> : <IconBadge className="rotate-180 text-black dark:text-white" />}
+                }} className="bg-gray-200 hover:bg-gray-300 border border-gray-400 text-white font-bold py-2 px-4 rounded-lg dark:bg-neutral-800 dark:hover:bg-neutral-600 relative group">{selectedJob[0].saved || savedJobsIds.includes(selectedJob[0].jobId) ? <IconCheck className="text-black dark:text-white" /> : <IconBadge className="rotate-180 text-black dark:text-white" />}
                   <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 text-nowrap group-hover:opacity-100 transition">
                     Save job
                   </span>

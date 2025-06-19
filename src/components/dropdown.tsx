@@ -7,18 +7,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/hooks/use-toast";
+import { setResumeExists } from "@/store/slices/jobsSlice";
 import { ApiResponse } from "@/types/ApiResponse";
 import axios, { AxiosError } from "axios";
 import fileDownload from "js-file-download";
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
 
-export function DropdownMenuDemo({
-  setResumeExists,
+export function DropdownMenuDemo({  
   resumePath,
-}: {
-  setResumeExists: React.Dispatch<React.SetStateAction<boolean>>;
+}: {  
   resumePath: string;
 }) {
+
+  const dispatch = useDispatch();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleDownloadButton = () => {
@@ -46,7 +48,7 @@ export function DropdownMenuDemo({
       });
 
       if (response.data.success) {
-        setResumeExists(true);
+        dispatch(setResumeExists(true));
         toast({
           title: "Success",
           description: response?.data?.message,
@@ -61,16 +63,17 @@ export function DropdownMenuDemo({
     }
   };
 
-  const handleFiledelete  = async () => {
+  const handleFiledelete  = async () => {    
     try {
       const response = await axios.delete(`/api/resume`);
       if (response.status === 200) {
-        setResumeExists(false);
+        dispatch(setResumeExists(false));
         toast({
           title: "Success",
           description: response?.data?.message,
         });
       }
+      
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast({

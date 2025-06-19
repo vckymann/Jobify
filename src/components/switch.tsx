@@ -36,6 +36,12 @@ export function SwitchDemo({open}:{open:boolean}) {
         getAiStatus();
     }, []);
 
+    useEffect(() => {
+        if(!resumeExists && isChecked) {
+            setIsChecked(false);            
+        }
+    }, [resumeExists]);
+
 
   return (
     <div className="flex items-center space-x-2 mt-12">
@@ -49,9 +55,10 @@ export function SwitchDemo({open}:{open:boolean}) {
       <Switch onCheckedChange={async () => {
         setDisabled(true);
         if (!resumeExists) {
+
             toast({
                 title: "Resume not found",
-                description: "Please upload your resume first",
+                description: "Please upload your resume in the profile first",
             });
             return
         }
