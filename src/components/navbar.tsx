@@ -23,7 +23,7 @@ export function NavbarDemo() {
     
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-    <div className="relative  w-full flex flex-col items-center dark:text-white">
+    <div className="relative w-full flex flex-col items-center  dark:text-white">
       {showAdditionalFilters && 
           <button onClick={(e) => 
           {
@@ -39,7 +39,7 @@ export function NavbarDemo() {
 
       <div className={cn("relative max-w-5xl w-full md:w-fit mx-auto z-50")}>
       <Menu>
-        <div className="flex flex-col gap-4 md:flex-row md:gap-2 md:items-center w-full md:w-fit">
+        <div className="flex flex-col gap-4 lg:flex-row lg:gap-2 lg:items-center w-full lg:w-fit">
           <div className="flex items-center gap-2 dark:bg-neutral-800">
             <IconSearch className="mt-1" />
             <FormField name="keyword" control={form.control} render={({ field }) => (<FormItem>
@@ -57,7 +57,7 @@ export function NavbarDemo() {
               </FormControl> 
             </FormItem>)} /> 
           </div>
-          <button disabled={isSubmitting || isSubmitDisabled} tabIndex={-1} type="submit" className={`bg-blue-500 lg:ml-6 px-2 text-white font-bold rounded-lg py-3 md:py-0 h-full text-nowrap hover:bg-blue-600`}>Find Jobs</button>
+          <button disabled={isSubmitting || isSubmitDisabled} tabIndex={-1} type="submit" className={`bg-blue-500 lg:ml-6 px-2 text-white font-bold rounded-lg py-3 md:py-2 h-full text-nowrap hover:bg-blue-600`}>Find Jobs</button>
         </div>        
       </Menu>
       </div>
