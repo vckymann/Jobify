@@ -97,7 +97,7 @@ export default function Page() {
         </p>
 
         <p className="text-md font-semibold mt-6 flex items-center gap-2"><IconSourceCode /> Source</p>
-        <p className={`mt-2 text-sm px-2 py-1 rounded-sm inline-block font-semibold ${selectedJob.source === "adzuna" ? "bg-orange-300 text-orange-600" : "bg-blue-300 text-blue-600"}`}>
+        <p className={`mt-2 text-sm px-2 py-1 rounded-sm inline-block font-semibold "bg-orange-300 text-orange-600"`}>
           {selectedJob.source}
         </p>
 

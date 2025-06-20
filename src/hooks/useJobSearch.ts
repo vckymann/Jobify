@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useDebounceCallback } from "usehooks-ts";
 import { z } from "zod";
+import { toast } from "./use-toast";
 
 export const useJobSearch = () => {
     const dispatch = useDispatch();
@@ -21,7 +22,6 @@ export const useJobSearch = () => {
     keyword: "",
     location: "",
     jobType: "",
-    remote: "",
     datePosted: "",
     radius: "",
     page: "1"
@@ -40,18 +40,25 @@ export const useJobSearch = () => {
   })
   
   const isSubmitDisabled = !form.getValues("keyword") && !form.getValues("location")
-  const watchFields = form.watch([ "jobType", "remote", "datePosted", "radius", "page"]);
+  const watchFields = form.watch([ "jobType", "datePosted", "radius", "page"]);
   
   const fetchJobs = async (data: z.infer<typeof jobSearchSchema>) => {
     dispatch(setIsSubmitting(true))
+    dispatch(setJobs([]));
     try {
-      const response = await axios.get(`/api/jobs?keyword=${data.keyword}&location=${data.location}&jobType=${data.jobType}&datePosted=${data.datePosted}&remote=${data.remote}&radius=${data.radius}&page=${data.page}`)
+      const response = await axios.get(`/api/jobs?keyword=${data.keyword}&location=${data.location}&jobType=${data.jobType}&datePosted=${data.datePosted}&radius=${data.radius}&page=${data.page}`)
+      console.log(response, "response");
       
       if(response && response.data) {        
         dispatch(setJobs(response.data.data))
       }
+
     } catch (error) {
       console.log(error)
+      toast({
+        title: "No jobs found for your search",
+        variant: "default"
+      })
     } finally {
       dispatch(setIsSubmitting(false))
     }

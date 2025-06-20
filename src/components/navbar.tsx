@@ -30,7 +30,6 @@ export function NavbarDemo() {
             e.preventDefault(); 
             form.resetField("datePosted");
             form.resetField("jobType");
-            form.resetField("remote");
             form.resetField("radius");            
             localStorage.removeItem("formValues");           
             dispatch(setShowAdditionalFilters(false))
@@ -79,23 +78,7 @@ export function NavbarDemo() {
               </SelectContent>
             </Select>
           </FormItem>
-          )} />
-
-          <FormField name="remote" control={form.control} render={({ field }) => (
-            <FormItem className="mr-2 bg-gray-200 hover:bg-gray-300 rounded-md dark:bg-neutral-800 dark:hover:bg-neutral-600">
-            <Select onValueChange={field.onChange} value={field.value}>
-              <FormControl>
-                <SelectTrigger className="">
-                  <SelectValue placeholder="Remote" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent className="bg-white border border-gray-500 dark:bg-neutral-800 dark:text-white">
-                <SelectItem className="hover:bg-gray-300 dark:hover:bg-neutral-600" value="true">True</SelectItem>
-                <SelectItem className="hover:bg-gray-300 dark:hover:bg-neutral-600" value="false">False</SelectItem>
-              </SelectContent>
-            </Select>
-          </FormItem>
-          )} />
+          )} />          
 
           <FormField name="datePosted" control={form.control} render={({ field }) => (
             <FormItem className="mr-2 bg-gray-200 hover:bg-gray-300 rounded-md dark:bg-neutral-800 dark:hover:bg-neutral-600">

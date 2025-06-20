@@ -72,7 +72,7 @@ function Page() {
                   <div className="bg-gray-300 border text-gray-800 rounded-sm border-gray-400 px-2 py-0.5 dark:bg-neutral-800 dark:text-white dark:border-white font-semibold text-nowrap">
                   {job.contractType === "not specified" ? "" : job.contractType}
                   </div>
-                  <div className={` ${job.source === 'adzuna' ? 'bg-orange-300 text-orange-600' : 'bg-blue-300 text-blue-600'} px-2 py-0.5 font-semibold rounded-sm`}>
+                  <div className={` bg-orange-300 text-orange-600 px-2 py-0.5 font-semibold rounded-sm`}>
                     {job.source}
                   </div>
                   <div className="bg-gray-300 text-gray-800  border-gray-400 dark:bg-neutral-800 dark:text-white border dark:border-white px-2 py-0.5 font-semibold rounded-sm text-nowrap">
@@ -156,7 +156,7 @@ function Page() {
                   <p className="ml-10 bg-gray-300 text-gray-800 border border-gray-400 dark:bg-neutral-800 dark:text-white max-w-[8.3rem] py-1 text-sm px-2 font-semibold rounded-sm capitalize">{new Date(selectedJob[0].jobPosted).toDateString()}</p>
   
                   <p className="text-md font-semibold inline-flex gap-4 mt-10"><IconSourceCode /> Source</p>
-                  <p className={`ml-10 ${selectedJob[0].source === "adzuna" ? "bg-orange-300 text-orange-600" : "bg-blue-300 text-blue-600"} max-w-[4.5rem] text-sm px-2 font-semibold rounded-sm capitalize`}>{selectedJob[0].source}</p>
+                  <p className={`ml-10 bg-orange-300 text-orange-600 max-w-[4.5rem] text-sm px-2 font-semibold rounded-sm capitalize`}>{selectedJob[0].source}</p>
   
                   <h3 className="font-bold text-xl mt-10">Job description</h3>
                     <p className="mt-4 text-gray-600 font-semibold dark:text-neutral-400">{selectedJob[0].description}</p>

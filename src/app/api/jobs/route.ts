@@ -21,47 +21,25 @@ export async function GET(request: Request): Promise<Response> {
     }, { status: 404 });
 
     let adzunaJobsUrl = process.env.NEXT_PUBLIC_ADZUNA_BASE_URL || "";    
-    let usaJobsUrl = process.env.NEXT_PUBLIC_USAJOBS_BASE_URL || "";
 
     const url = new URL(request.url);
     const params = Object.fromEntries(url.searchParams.entries());
 
     if(params) {                                        
-
         adzunaJobsUrl = buildUrl(adzunaJobsUrl, params, "adzuna");
-        usaJobsUrl = buildUrl(usaJobsUrl, params, "usaJobs");        
     }
     
 
     const useAi = user?.useAi
 
-    console.log("adzunaJobsUrl",adzunaJobsUrl);
-    console.log("usaJobsUrl",usaJobsUrl);
-    
+    console.log("adzunaJobsUrl",adzunaJobsUrl);    
 
     try {
-        const adzunaResponse = await axios.get(adzunaJobsUrl);
-
-        const usaJobsResponse = await axios.get(usaJobsUrl, {
-            headers: {
-                'Host': process.env.NEXT_PUBLIC_USAJOBS_HOST,
-                'User-Agent': process.env.NEXT_PUBLIC_USAJOBS_USER_AGENT,
-                'Authorization-key': process.env.NEXT_PUBLIC_USAJOBS_API_KEY,
-            }
-        });
-         
-
-        const [adzunaJobs, usaJobs] = await Promise.all([adzunaResponse, usaJobsResponse]);
-        
-        console.log(adzunaJobs.data.results, usaJobs.data.SearchResult.SearchResultItems);
-        
-
+        const adzunaJobs = await axios.get(adzunaJobsUrl);                     
+            
         const normalizeAdzunaResponse = normalizeJobs(adzunaJobs.data.results, "adzuna");
-        const normalizeUsaJobsResponse = normalizeJobs(usaJobs.data.SearchResult.SearchResultItems, "usaJobs");
 
-        const normalizedJobs = [...normalizeAdzunaResponse, 
-            ...normalizeUsaJobsResponse    
-        ];                    
+        const normalizedJobs = [...normalizeAdzunaResponse];                    
         
 
         if (normalizedJobs.length > 0) {
@@ -71,8 +49,7 @@ export async function GET(request: Request): Promise<Response> {
                  if(!processedJobs.success) {
                      return Response.json({
                          success: false,
-                         message: processedJobs.message,
-                         data: ["ggga"]
+                         message: processedJobs.message,                         
                      })
                  }
 
