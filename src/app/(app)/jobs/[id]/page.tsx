@@ -23,14 +23,11 @@ export default function Page() {
   if (!selectedJob) {
     router.push('/'); // fallback if someone visits URL directly
     return null;
-  }
-
-  console.log("selectedJob",selectedJob);
-  
+  }  
 
   return (
     <div className="p-4 w-full max-w-2xl mx-auto dark:text-white text-black">
-      <button className="mb-4 px-2 py-2 hover:bg-neutral-700 rounded-lg border border-gray-400" onClick={() => router.back()}><IconArrowLeft stroke={2.5} className="w-6 h-6" /></button>
+      <button className="mb-4 px-2 py-2 hover:dark:bg-neutral-700 hover:bg-gray-200 rounded-lg border border-gray-400" onClick={() => router.back()}><IconArrowLeft stroke={2.5} className="w-6 h-6" /></button>
       <h2 className="text-3xl font-bold mb-4">{selectedJob.company}</h2>
       <div className="text-gray-600 dark:text-white">{selectedJob.company} | {selectedJob.location}</div>
 
