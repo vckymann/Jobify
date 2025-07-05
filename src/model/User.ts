@@ -29,7 +29,8 @@ export interface User extends Document {
     verifyCodeExpiry: Date;
     isVerified: boolean;
     useAi: boolean;  
-    savedJobs: NormalizedJobDocument[];    
+    savedJobs: NormalizedJobDocument[];
+    resume: string;  
 }
 
 const userSchema: Schema<User> = new Schema({
@@ -41,6 +42,7 @@ const userSchema: Schema<User> = new Schema({
     isVerified: { type: Boolean, required: true, default: false },
     useAi: { type: Boolean, required: true, default: false },
     savedJobs: { type: [jobSchema], _id:false },    
+    resume: { type: String, required: false },
 })
 
 const UserModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User", userSchema);

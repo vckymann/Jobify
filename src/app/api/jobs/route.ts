@@ -44,7 +44,7 @@ export async function GET(request: Request): Promise<Response> {
 
         if (normalizedJobs.length > 0) {
             if(useAi) {
-                 const processedJobs = await processJobsWithAI(normalizedJobs, user.email);                 
+                 const processedJobs = await processJobsWithAI(normalizedJobs, user.resume);                 
 
                  if(!processedJobs.success) {
                      return Response.json({

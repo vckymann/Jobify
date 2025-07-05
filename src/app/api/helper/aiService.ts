@@ -1,14 +1,13 @@
 import { NormalizedJob } from "@/types/job";
 import { streamText } from "ai";
-import fs from "fs/promises";
-import { join } from "path";
 import { google } from "@ai-sdk/google";
+import axios from "axios";
 
 
-export async function processJobsWithAI(jobs: NormalizedJob[], user: string) {
+export async function processJobsWithAI(jobs: NormalizedJob[], resumeUrl: string) {
 
-  const filepath = join(process.cwd(), "public", `resume${user}.pdf`);
-  const file = await fs.readFile(filepath);
+  const response = await axios.get(resumeUrl, { responseType: "arraybuffer" });
+  const file = Buffer.from(response.data);
 
   if (!file) {
     return {
