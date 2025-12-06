@@ -9,11 +9,14 @@ import { ApiResponse } from '@/types/ApiResponse';
 import { toast } from '@/hooks/use-toast';
 import { useDispatch } from 'react-redux';
 import { setResumeExists } from '@/store/slices/jobsSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
 function Page() {  
   
   const session = useSession();
   const dispatch = useDispatch();
+  const resumeExists = useSelector((state: RootState) => state.jobs.resumeExists);
   const [resumePath, setResumePath] = useState('');
   const [processingMessage, setProcessingMessage] = useState('');
 
@@ -85,7 +88,7 @@ function Page() {
       <div className='p-4'>
       <h3 className='text-2xl font-semibold text-gray-800 dark:text-white'>Resume</h3>
       <div className='mt-2 w-full h-32 border border-gray-400 rounded-lg flex items-center justify-between px-4'>
-      {resumePath ? (
+      {resumeExists ? (
         <>
         <div className='flex items-center w-full h-full gap-4'>
           <svg width="44" height="64" viewBox="0 0 44 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="">
