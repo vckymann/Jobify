@@ -57,7 +57,7 @@ export function NavbarDemo() {
                 )}
               >
                 <Menu>
-                  <div className="flex flex-col lg:flex-row lg:gap-2 lg:items-center w-full lg:w-fit">
+                  <div className="flex flex-col gap-2 lg:flex-row lg:gap-2 lg:items-center w-full lg:w-fit">
                     {/* Keyword */}
                     <div className="flex items-center gap-2 rounded-lg border border-neutral-400 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-800 px-3 py-2 flex-1">
                       <IconSearch size={18} className="text-neutral-500" />
