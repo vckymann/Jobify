@@ -7,7 +7,7 @@ import { RootState } from "@/store/store";
 import { NormalizedJob } from "@/types/job";
 import { useDispatch } from "react-redux";
 import { addSavedJob, setSelectedJob } from "@/store/slices/jobsSlice";
-import { IconBadge, IconBriefcase, IconCash, IconCheck, IconClock, IconCopy, IconSourceCode } from "@tabler/icons-react";
+import { IconBadge, IconBriefcase, IconCash, IconCheck, IconClock, IconCopy } from "@tabler/icons-react";
 import { Loader } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/hooks/use-toast";
@@ -31,160 +31,237 @@ function Page() {
   
 
   return (
-    <>
-      <div className='flex mt-10 mx-3 gap-6 flex-col dark:text-white relative'>        
-      <NavbarDemo />      
-      <Divider className="dark:bg-neutral-300"  />
-      {jobs.length > 0 && !isSubmitting ? (
-        <div className="flex lg:min-w-[70rem] justify-center h-screen lg:mx-auto">
-        {/* Job Listings */}
-        <div className="lg:w-1/2 w-full max-w-xl border-gray-400 p-4 overflow-y-auto">
-          <h2 className="text-xl font-bold mb-4">Job Listings</h2>
-          <div className="space-y-4">
-            {jobs.map((job, i) => (
-              <div
-                onClick={() => {
-                  if(!desktop){
-                    router.push(`/jobs/${i + 1}`)
-                  }
-                  
-                  dispatch(setSelectedJob([job]));
-                }}
-                key={i + 1}
-                className="p-4 border border-gray-400 rounded cursor-pointer hover:bg-gray-100 pb-4 dark:hover:bg-neutral-700 overflow-y-hidden"
-              >
-                <div className="flex justify-between">
-                  <h3 className="font-semibold text-2xl">
+  <div className="relative flex flex-col mt-10 px-4 py-6 dark:text-neutral-100">
+    <NavbarDemo />
+
+    <Divider className="my-6 dark:bg-neutral-400" />
+
+    {jobs.length > 0 && !isSubmitting ? (
+      <div className="flex lg:min-w-[70rem] justify-center h-screen lg:mx-auto">
+        {/* Job List */}
+        <div className="lg:w-1/2 w-full mt-4 max-w-xl overflow-y-auto pr-2">
+          <h2 className="text-lg pl-2 mb-2 font-semibold text-neutral-900 dark:text-neutral-100">
+            Job Listings
+          </h2>
+
+          {jobs.map((job, i) => (
+            <div
+              key={job.jobId}
+              onClick={() => {
+                if (!desktop) router.push(`/jobs/${i + 1}`);
+                dispatch(setSelectedJob([job]));
+              }}
+              className="group cursor-pointer rounded-xl border border-neutral-400 mb-2 dark:border-neutral-400 bg-white dark:bg-neutral-900 p-4 transition hover:shadow-md hover:border-indigo-500 hover:dark:border-indigo-500"
+            >
+              <div className="flex justify-between gap-4">
+                <h3 className="text-xl font-semibold group-hover:text-indigo-500 transition">
                   {job.title}
-                  </h3>
-                <div className="">
-                  {job.matchScore !== undefined && (
-                  <>
-                  <CircularProgressCountUp key={job.jobId} matchScore={job.matchScore} />
-                  </>                  
+                </h3>
+
+                {job.matchScore !== undefined && (
+                  <CircularProgressCountUp
+                    key={job.jobId}
+                    matchScore={job.matchScore}
+                  />
                 )}
+              </div>
+
+              <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+                {job.company}
+              </p>
+              <p className="text-xs text-neutral-500 dark:text-neutral-500">
+                {job.location}
+              </p>
+
+              <div className="mt-3 flex flex-wrap gap-2 text-xs font-medium">
+                {job.contractType !== "not specified" && (
+                  <span className="rounded-md bg-neutral-100 dark:bg-neutral-800 px-2 py-1">
+                    {job.contractType}
+                  </span>
+                )}
+
+                <span className="rounded-md bg-orange-100 text-orange-700 px-2 py-1">
+                  {job.source}
+                </span>
+
+                <span className="rounded-md bg-neutral-100 dark:bg-neutral-800 px-2 py-1">
+                  ${job.minSalary} – ${job.maxSalary}
+                </span>
+              </div>
+
+              <p className="mt-4 line-clamp-3 text-sm text-neutral-600 dark:text-neutral-400">
+                {job.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Job Details */}
+        {desktop && (
+          <div className="w-1/2 rounded-xl mt-7 border border-neutral-400 dark:border-neutral-400 bg-white dark:bg-neutral-900 flex flex-col overflow-hidden">
+            {selectedJob[0] ? (
+              <>
+                {/* Sticky Header */}
+                <div className="sticky top-0 z-10 rounded-t-xl border-b border-neutral-400 dark:border-neutral-400 bg-white dark:bg-neutral-900 p-6">
+                  <h2 className="text-2xl font-semibold">
+                    {selectedJob[0].title}
+                  </h2>
+                  <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+                    {selectedJob[0].company} · {selectedJob[0].location}
+                  </p>
+
+                  <div className="mt-4 flex gap-3">
+                    <a
+                      href={selectedJob[0].jobUrl}
+                      target="_blank"
+                      className="rounded-lg bg-indigo-500 px-4 py-2 text-sm font-semibold text-white hover:opacity-90"
+                    >
+                      Apply now
+                    </a>
+
+                    <button
+                      disabled={
+                        selectedJob[0].saved ||
+                        savedJobsIds.includes(selectedJob[0].jobId)
+                      }
+                      onClick={async () => {
+                        try {
+                          const response = await axios.post(
+                            `/api/savedJobs`,
+                            { job: selectedJob[0] }
+                          );
+                          if (response.status === 200) {
+                            toast({
+                              title: "Job saved",
+                              description: "Added to saved jobs",                                                            
+                            });
+                            dispatch(addSavedJob(selectedJob[0]));
+                          }
+                        } catch (error) {
+                          const axiosError =
+                            error as AxiosError<ApiResponse>;
+                          toast({
+                            title: "Failed to save job",
+                            description:
+                              axiosError.response?.data.message,
+                          });
+                        }
+                      }}
+                      className="rounded-lg border border-neutral-400 dark:border-neutral-400 bg-neutral-100 dark:bg-neutral-800 px-4 py-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition"
+                    >
+                      {selectedJob[0].saved ||
+                      savedJobsIds.includes(selectedJob[0].jobId) ? (
+                        <IconCheck />
+                      ) : (
+                        <IconBadge className="rotate-180" />
+                      )}
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(window.location.href);
+                        toast({
+                          title: "Copied",
+                          description: "Link copied to clipboard",
+                        });
+                      }}
+                      className="rounded-lg border border-neutral-400 dark:border-neutral-400 bg-neutral-100 dark:bg-neutral-800 px-4 py-2 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition"
+                    >
+                      <IconCopy />
+                    </button>
                   </div>
                 </div>
-                <p className="text-gray-600 text-md mt-3 dark:text-neutral-300">{job.company}</p>
-                <p className="text-sm text-gray-500 dark:text-neutral-400">{job.location}</p>
-                <div className="flex gap-4 mt-3">
-                  
-                  <div className="bg-gray-300 border text-gray-800 rounded-sm border-gray-400 px-2 py-0.5 dark:bg-neutral-800 dark:text-white dark:border-white font-semibold text-nowrap">
-                  {job.contractType === "not specified" ? "" : job.contractType}
-                  </div>
-                  <div className={` bg-orange-300 text-orange-600 px-2 py-0.5 font-semibold rounded-sm`}>
-                    {job.source}
-                  </div>
-                  <div className="bg-gray-300 text-gray-800  border-gray-400 dark:bg-neutral-800 dark:text-white border dark:border-white px-2 py-0.5 font-semibold rounded-sm text-nowrap">
-                    ${job.minSalary} - ${job.maxSalary} a year
-                  </div>                  
-                </div>                
-                <div className="mt-8 text-gray-500 text-sm">{job.description}</div>
-              </div>
-            ))}
-          </div>        
-        </div>
-  
-        {/* Job Details */
-        desktop && (
-          
-          <div className={`w-1/2 hidden lg:flex flex-col rounded-lg border-b border-l border-t border-r border-gray-400  ${desktop ? 'flex justify-center items-center' : ''}`}>
-            {selectedJob[0] && (            
-              <div className='sticky rounded-lg px-4 py-10 top-0 w-full bg-white dark:bg-neutral-800 shadow-md z-10 border-gray-400 border'>
-                <h2 className="text-3xl font-bold mb-4">{selectedJob[0].title}</h2>
-                <div>{selectedJob[0].company} | {selectedJob[0].location}</div>
-                <div className="flex gap-4 mt-4">
-                <a target="_blank" href={selectedJob[0].jobUrl}>                  
-                <button className="bg-blue-500 hover:opacity-90 text-white font-bold py-2 px-4 rounded-lg border border-gray-400">Apply Now</button>
-                </a>
 
-                <button disabled={selectedJob[0].saved || savedJobsIds.includes(selectedJob[0].jobId)} onClick={async () => {
-                  try {
-                    const response = await axios.post(`/api/savedJobs`, { job: selectedJob[0] });
-                    if (response.status === 200) {
-                      toast({
-                        title: "Job saved",
-                        description: "Job saved to your saved jobs",                       
-                      });
-                      dispatch(addSavedJob(selectedJob[0]));                       
-                    }
-                  } catch (error) {
-                    const axiosError = error as AxiosError<ApiResponse>;
-                    
-                    toast({
-                      title: "Failed to save job",
-                      description: axiosError.response?.data.message,
-                    });                    
-                  }
-                }} className="bg-gray-200 hover:bg-gray-300 border border-gray-400 text-white font-bold py-2 px-4 rounded-lg dark:bg-neutral-800 dark:hover:bg-neutral-600 relative group">{selectedJob[0].saved || savedJobsIds.includes(selectedJob[0].jobId) ? <IconCheck className="text-black dark:text-white" /> : <IconBadge className="rotate-180 text-black dark:text-white" />}
-                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 text-nowrap group-hover:opacity-100 transition">
-                    Save job
-                  </span>
-                </button>
-                <button onClick={() => {
-                  navigator.clipboard.writeText(window.location.href)
-                  toast({
-                    title: "Copied to clipboard",
-                    description: "Link copied to clipboard",
-                  })
-                }} className="bg-gray-200 hover:bg-gray-300 border border-gray-400 text-white dark:bg-neutral-800 dark:hover:bg-neutral-600 font-bold py-2 px-4 rounded-lg relative group"><IconCopy className="text-black dark:text-white" />
-                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 text-nowrap group-hover:opacity-100 transition">
-                    Copy link
-                  </span>
-                </button></div>
+                {/* Details */}
+               <div className="p-6 space-y-6 text-sm overflow-y-auto">
+                  {selectedJob[0].matchScore !== undefined && (
+                    <div>
+                      <p className="mb-2 font-semibold">AI Match Score</p>
+                      <CircularProgressCountUp
+                        detailSection
+                        matchScore={selectedJob[0].matchScore}
+                      />
+                    </div>
+                  )}
+
+                  <div>
+                    <p className="font-semibold flex items-center gap-2">
+                      <IconCash /> Pay
+                    </p>
+                    <p className="mt-1 text-neutral-600 dark:text-neutral-400">
+                      ${selectedJob[0].minSalary} – $
+                      {selectedJob[0].maxSalary} / year
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold flex items-center gap-2">
+                      <IconBriefcase /> Job Type
+                    </p>
+                    <p className="mt-1 capitalize text-neutral-600 dark:text-neutral-400">
+                      {selectedJob[0].contractType}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold flex items-center gap-2">
+                      <IconClock /> Posted
+                    </p>
+                    <p className="mt-1 text-neutral-600 dark:text-neutral-400">
+                      {new Date(
+                        selectedJob[0].jobPosted
+                      ).toDateString()}
+                    </p>
+                  </div>
+
+                  <div className="pt-6">
+                    <p className="font-semibold mb-2">Description</p>
+                    <p className="text-neutral-600 dark:text-neutral-400">
+                      {selectedJob[0].description}
+                    </p>
+                  </div>
+
+                  <a
+                    href={selectedJob[0].jobUrl}
+                    target="_blank"
+                    className="inline-block text-indigo-500 underline"
+                  >
+                    View full listing
+                  </a>
+                </div>
+              </>
+            ) : (
+              <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
+                <h2 className="text-4xl font-bold text-indigo-500">
+                  Jobify
+                </h2>
+                <p className="text-sm text-neutral-500">
+                  Select a job to view details
+                </p>
               </div>
             )}
-            {
-              selectedJob[0] ? (
-                <div className="flex-1 p-4 pt-0 mt-2 overflow-y-scroll">
-                  <h3 className="font-bold text-xl">Job details</h3>
-
-                {selectedJob[0].matchScore !== undefined && (
-                  <>
-                  <p className="text-md font-semibold inline-flex gap-4 mt-10 mb-4"> Ai MatchScore</p>
-                  <CircularProgressCountUp detailSection={true} key={selectedJob[0].jobId} matchScore={selectedJob[0].matchScore} />
-                  </>                  
-                )}
-
-                  <p className="text-md font-semibold inline-flex gap-4 mt-10"><IconCash /> Pay</p>
-                  <p className="ml-10 bg-gray-300 text-gray-800 border border-gray-400 dark:bg-neutral-800 dark:text-white max-w-56 py-1 text-sm px-2 font-semibold rounded-sm">${selectedJob[0].minSalary} - ${selectedJob[0].maxSalary} a year</p>
-  
-                  <p className="text-md font-semibold inline-flex gap-4 mt-10"><IconBriefcase /> Job type</p>
-                  <p className="ml-10 bg-gray-300 text-gray-800 border border-gray-400 dark:bg-neutral-800 dark:text-white max-w-28 py-1 text-sm px-2 font-semibold rounded-sm capitalize">{selectedJob[0].contractType}</p>
-  
-                  <p className="text-md font-semibold inline-flex gap-4 mt-10"><IconClock /> Job posted</p>
-                  <p className="ml-10 bg-gray-300 text-gray-800 border border-gray-400 dark:bg-neutral-800 dark:text-white max-w-[8.3rem] py-1 text-sm px-2 font-semibold rounded-sm capitalize">{new Date(selectedJob[0].jobPosted).toDateString()}</p>
-  
-                  <p className="text-md font-semibold inline-flex gap-4 mt-10"><IconSourceCode /> Source</p>
-                  <p className={`ml-10 bg-orange-300 text-orange-600 max-w-[4.5rem] text-sm px-2 font-semibold rounded-sm capitalize`}>{selectedJob[0].source}</p>
-  
-                  <h3 className="font-bold text-xl mt-10">Job description</h3>
-                    <p className="mt-4 text-gray-600 font-semibold dark:text-neutral-400">{selectedJob[0].description}</p>
-  
-                    <p className="mt-4 text-gray-600 font-semibold dark:text-neutral-400">To view the full job listing click <a target="_blank" className="cursor-pointer text-blue-500 underline" href={selectedJob[0].jobUrl}>here</a></p>                
-              </div>
-              ):(
-                <div className="flex flex-col items-center gap-3">
-                  <h2 className="text-5xl font-bold text-blue-500">Jobify</h2>
-                  <p className="font-semibold">Select a job to view details</p>
-                </div>
-              )
-            }            
-        </div>
-        )
-        }
+          </div>
+        )}
       </div>
-      ) : (
-      <>
-      <div className="w-full h-[50vh] flex justify-center items-center">{jobs.length >= 0 && isSubmitting  ? <Loader className="animate-spin" /> : <div>
-        <h2 className="text-5xl font-bold text-blue-500 text-center">Jobify</h2>
-        <p className="font-semibold text-center pt-2">Find your dream job today</p>
-      </div>}</div>
-      </>
-      )}      
-    </div>        
-    </>
-  )
+    ) : (
+      <div className="flex h-[50vh] items-center justify-center">
+        {isSubmitting ? (
+          <Loader className="animate-spin" />
+        ) : (
+          <div className="text-center">
+            <h2 className="text-4xl font-bold text-indigo-500">
+              Jobify
+            </h2>
+            <p className="mt-2 text-sm text-neutral-500">
+              Find your dream job today
+            </p>
+          </div>
+        )}
+      </div>
+    )}
+  </div>
+);
+
 }
 
 export default Page

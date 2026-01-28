@@ -19,7 +19,7 @@ export default function CircularProgressCountUp({ matchScore,detailSection }: Ci
   });
   
   const getColor = (score: number) => {
-    if (score >= 80) return "rgb(59, 130, 246)"; 
+    if (score >= 80) return "#6366f1"; 
     if (score >= 50) return "orange";
     return "red";
   };

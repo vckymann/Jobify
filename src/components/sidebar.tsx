@@ -9,7 +9,6 @@ import {
   IconUserBolt,
 } from "@tabler/icons-react";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
@@ -23,14 +22,7 @@ export const Logo = () => {
         href="#"
         className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
       >
-        <Image width={40} height={40} src="/logo.png" className="" alt="" ></Image>
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="font-medium text-black dark:text-white whitespace-pre"
-        >
-          Jobify
-        </motion.span>
+        <Image width={40} height={40} src="/logo.png" className="" alt="" ></Image>        
       </Link>
     );
   };
@@ -96,7 +88,7 @@ export const Logo = () => {
       return (
         <div
           className={cn(
-            "w-full mx-auto flex flex-col md:flex-row bg-[#fcf9f3f1]+3 dark:bg-neutral-800 flex-1 border border-neutral-200 dark:border-neutral-700 overflow-hidden",
+            "w-full mx-auto flex flex-col md:flex-row bg-[#fcf9f3f1]+3 dark:bg-neutral-800 flex-1 overflow-hidden",
             "h-screen"
           )}
         >

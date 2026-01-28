@@ -29,9 +29,10 @@ const toastVariants = cva(
   {
     variants: {
       variant: {
-        default: " border border-white dark:border-neutral-700 text-white bg-blue-500",
+        default:
+          "border border-neutral-400 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 font-semibold",
         destructive:
-          "destructive group border-destructive bg-red-500 text-white",
+          "destructive border-destructive bg-neutral-100 dark:bg-neutral-800",
       },
     },
     defaultVariants: {
@@ -44,15 +45,13 @@ const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
     VariantProps<typeof toastVariants>
->(({ className, variant, ...props }, ref) => {
-  return (
-    <ToastPrimitives.Root
-      ref={ref}
-      className={cn(toastVariants({ variant }), className)}
-      {...props}
-    />
-  )
-})
+>(({ className, variant, ...props }, ref) => (
+  <ToastPrimitives.Root
+    ref={ref}
+    className={cn(toastVariants({ variant }), className)}
+    {...props}
+  />
+))
 Toast.displayName = ToastPrimitives.Root.displayName
 
 const ToastAction = React.forwardRef<
@@ -94,7 +93,11 @@ const ToastTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Title
     ref={ref}
-    className={cn("text-md font-bold", className)}
+    className={cn(
+      "text-lg font-bold text-indigo-500",
+      "group-[.destructive]:text-red-500",
+      className
+    )}
     {...props}
   />
 ))
@@ -106,14 +109,16 @@ const ToastDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ToastPrimitives.Description
     ref={ref}
-    className={cn("text-sm opacity-90", className)}
+    className={cn(
+      "text-sm opacity-90 text-black dark:text-white",
+      className
+    )}
     {...props}
   />
 ))
 ToastDescription.displayName = ToastPrimitives.Description.displayName
 
 type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>
-
 type ToastActionElement = React.ReactElement<typeof ToastAction>
 
 export {

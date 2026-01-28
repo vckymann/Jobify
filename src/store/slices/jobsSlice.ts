@@ -7,7 +7,7 @@ const initialState = {
     savedJobs: [] as NormalizedJob[],
     isSubmitting: false,
     showAdditionalFilters: false,
-    isDarkMode: true,
+    isDarkMode: false,
     resumeExists: false,    
 }
 

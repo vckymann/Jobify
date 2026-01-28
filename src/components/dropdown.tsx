@@ -109,7 +109,7 @@ export function DropdownMenuDemo({
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button className="text-3xl outline-none">...</Button>
+        <Button className="text-3xl dark:text-white outline-none">...</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-gray-100 dark:bg-neutral-800 dark:border-neutral-500 dark:text-white border border-gray-400">
         <a href={resumePath} target="_blank">

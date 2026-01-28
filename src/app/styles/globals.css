@@ -12,3 +12,13 @@ html {
     
 }
 
+html, body {
+  margin: 0;
+  padding: 0;  
+  overflow: hidden;
+  overscroll-behavior: none;  
+}
+
+.dark {
+    background-color: #262626;
+}
